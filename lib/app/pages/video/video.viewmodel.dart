@@ -5,6 +5,14 @@ import 'package:smartfarm/repositories.dart';
 
 class VideoViewModel extends ViewModel {
   bool hasPlayed = false;
+
+  bool _isLive = true;
+  bool get isLive => _isLive;
+  set isLive(bool value) {
+    _isLive = value;
+    notifyListeners();
+  }
+
   bool _isPlaying = false;
   bool get isPlaying => _isPlaying;
   set isPlaying(bool value) {
@@ -75,11 +83,20 @@ class VideoViewModel extends ViewModel {
 
   void playVideo() {
     if (controller != null) {
-      controller?.play();
-      hasPlayed = true;
-      isPlaying = true;
+      if (controller!.value.position == controller!.value.duration) {
+        controller?.seekTo(Duration.zero);
+        controller?.play();
+        hasPlayed = true;
+        isPlaying = true;
 
-      showVideoController();
+        showVideoController();
+      } else {
+        controller?.play();
+        hasPlayed = true;
+        isPlaying = true;
+
+        showVideoController();
+      }
     }
   }
 
@@ -126,9 +143,10 @@ class VideoViewModel extends ViewModel {
             isPlaying = false;
             showVideoController();
           }
+        } else {
+          isPlaying = false;
+          showVideoController();
         }
-
-        // isPlaying = controller!.value.isPlaying;
       });
       controller?.setLooping(false);
       controller?.setVolume(1.0);

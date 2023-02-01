@@ -27,65 +27,7 @@ class _View extends StatelessView<VideoViewModel> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AspectRatio(
-            aspectRatio: viewModel.videoAspectRatio,
-            child: Stack(
-              children: [
-                viewModel.controller != null
-                    ? viewModel.controller!.value.isInitialized
-                        ? VideoPlayer(viewModel.controller!)
-                        : videoLoading()
-                    : videoLoading(),
-                AnimatedOpacity(
-                  opacity: viewModel.isControllerShow ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 500),
-                  child: InkWell(
-                    onTap: viewModel.showOrHideVideoController,
-                    child: Container(
-                      color: IColors.blacktransparant,
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () => viewModel.playPreviousVideo(),
-                              child: SvgPicture.asset(
-                                'assets/icons/svg/video_back.svg',
-                                color: IColors.whitetransparant,
-                                width: 20,
-                              ),
-                            ),
-                            const SizedBox(width: 40),
-                            InkWell(
-                              onTap: () => viewModel.isPlaying
-                                  ? viewModel.pauseVideo()
-                                  : viewModel.playVideo(),
-                              child: SvgPicture.asset(
-                                viewModel.isPlaying
-                                    ? 'assets/icons/svg/video_pause.svg'
-                                    : 'assets/icons/svg/video_play.svg',
-                                color: IColors.whitetransparant,
-                                width: 40,
-                              ),
-                            ),
-                            const SizedBox(width: 40),
-                            InkWell(
-                              onTap: () => viewModel.playNextVideo(),
-                              child: SvgPicture.asset(
-                                'assets/icons/svg/video_next.svg',
-                                color: IColors.whitetransparant,
-                                width: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          videoPlayer(context, viewModel),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
