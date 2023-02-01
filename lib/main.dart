@@ -24,7 +24,6 @@ Future<void> main() async {
   //     colorScheme: darkColorScheme,
   //     textTheme: textTheme,
   //   );
-  await PackageInfo.fromPlatform();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

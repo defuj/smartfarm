@@ -1,6 +1,5 @@
 export 'package:smartfarm/config/index.dart';
 export 'package:smartfarm/app/index.dart';
-export 'package:package_info_plus/package_info_plus.dart';
 export 'package:get_storage/get_storage.dart';
 export 'package:pmvvm/pmvvm.dart';
 export 'package:flutter/material.dart';
@@ -21,3 +20,5 @@ export 'package:firebase_messaging/firebase_messaging.dart';
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:flutter_dash/flutter_dash.dart';
 export 'package:firebase_storage/firebase_storage.dart';
+export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+export 'package:video_player/video_player.dart';

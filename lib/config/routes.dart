@@ -26,4 +26,9 @@ var getRoutes = [
     page: () => const ChangeEmail(),
     transition: Transition.cupertino,
   ),
+  GetPage(
+    name: '/video',
+    page: () => const VideoMonitoring(),
+    transition: Transition.cupertino,
+  ),
 ];

@@ -24,6 +24,7 @@ abstract class IColors {
   static const black80 = Color(0xFF52575C);
   static const black100 = Color(0xFF25282B);
   static const blacktransparant = Color.fromARGB(138, 0, 0, 0);
+  static const whitetransparant = Color.fromARGB(207, 255, 255, 255);
 
   static const green50 = Color(0xFFE7FAF1);
   static const green100 = Color(0xFFCDF4E3);

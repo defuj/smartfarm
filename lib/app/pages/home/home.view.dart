@@ -590,7 +590,7 @@ class _View extends StatelessView<HomeViewModel> {
                               width: 120,
                               child: ButtonPrimary(
                                 text: 'Lihat Video',
-                                onPressed: () {},
+                                onPressed: viewModel.openVideoMonitoring,
                               ),
                             ),
                           ],

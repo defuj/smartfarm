@@ -52,6 +52,14 @@ class HomeViewModel extends ViewModel {
     }
   }
 
+  void openVideoMonitoring() {
+    try {
+      Get.toNamed('/video');
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   @override
   void init() {}
 
