@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "286338874029",
+    "project_id": "smart-farm-3db28",
+    "storage_bucket": "smart-farm-3db28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286338874029:android:0fed5062ef8bf4e8432424",
+        "android_client_info": {
+          "package_name": "id.co.sadigit.smartfarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286338874029-gp5od5p1ch27er8dj9quu7nlfh9c5o83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHLUNNz78LHDiYdDlZjuAqq2e9GRAlYJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286338874029-gp5od5p1ch27er8dj9quu7nlfh9c5o83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
