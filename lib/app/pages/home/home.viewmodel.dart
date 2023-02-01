@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:smartfarm/repositories.dart';
 
 class HomeViewModel extends ViewModel {
+  late SweetDialog loading;
+  final box = GetStorage();
+
   String _selected = 'Aklimatisasi';
   String get selected => _selected;
   set selected(String value) {
@@ -60,8 +63,54 @@ class HomeViewModel extends ViewModel {
     }
   }
 
+  void checkAccount() async {
+    loading.show();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      FirebaseAuth.instance.authStateChanges().listen((user) {
+        if (user != null) {
+          loading.dismiss();
+        } else {
+          box.erase();
+          FirebaseAuth.instance.signOut();
+          loading.dismiss();
+          SweetDialog(
+            context: context,
+            title: 'Akun tidak ditemukan',
+            content: 'Silahkan masuk kembali',
+            confirmText: 'Oke',
+            barrierDismissible: false,
+            onConfirm: () => Get.offAllNamed('/login'),
+          ).show();
+        }
+      });
+    } else {
+      await box.erase();
+      await FirebaseAuth.instance.signOut();
+      loading.dismiss();
+      SweetDialog(
+        context: context,
+        title: 'Akun tidak ditemukan',
+        content: 'Silahkan masuk kembali',
+        confirmText: 'Oke',
+        barrierDismissible: false,
+        onConfirm: () => Get.offAllNamed('/login'),
+      ).show();
+    }
+  }
+
   @override
-  void init() {}
+  void init() {
+    loading = SweetDialog(
+      context: context,
+      dialogType: SweetDialogType.loading,
+      barrierDismissible: false,
+    );
+
+    Future.delayed(Duration.zero, () {
+      checkAccount();
+    });
+  }
 
   @override
   void onDependenciesChange() {}

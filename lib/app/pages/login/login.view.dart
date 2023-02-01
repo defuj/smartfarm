@@ -105,6 +105,7 @@ class _View extends StatelessView<LoginViewModel> {
                           left: 0,
                           right: 16,
                         ),
+                        onChanged: (value) => viewModel.email = value,
                         hintText: 'Masukkan alamat email',
                         prefixIcon: Container(
                           color: IColors.gray100,
@@ -133,6 +134,7 @@ class _View extends StatelessView<LoginViewModel> {
                           left: 0,
                           right: 0,
                         ),
+                        onChanged: (value) => viewModel.password = value,
                         prefixIcon: Container(
                           color: IColors.gray100,
                           padding: const EdgeInsets.symmetric(
@@ -149,7 +151,7 @@ class _View extends StatelessView<LoginViewModel> {
                       const SizedBox(height: 24),
                       ButtonPrimary(
                         text: 'Masuk',
-                        onPressed: viewModel.login,
+                        onPressed: viewModel.checkRequirement,
                       ),
                       const SizedBox(height: 56),
                       Center(

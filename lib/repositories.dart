@@ -22,3 +22,4 @@ export 'package:flutter_dash/flutter_dash.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 export 'package:video_player/video_player.dart';
+export 'package:firebase_auth/firebase_auth.dart';
