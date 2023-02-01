@@ -27,7 +27,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+//   await FirebaseMessaging.instance.setAutoInitEnabled(true);
   await GetStorage.init();
   runApp(
     GetMaterialApp(

@@ -26,7 +26,7 @@ class HomeViewModel extends ViewModel {
     notifyListeners();
   }
 
-  void signOut() {
+  void signOut() async {
     SweetDialog(
       context: context,
       title: 'Keluar dari akun?',
@@ -34,6 +34,8 @@ class HomeViewModel extends ViewModel {
       confirmText: 'Ya',
       cancelText: 'Tidak',
       onConfirm: () {
+        box.erase();
+        FirebaseAuth.instance.signOut();
         Get.offAllNamed('/login');
       },
     ).show();

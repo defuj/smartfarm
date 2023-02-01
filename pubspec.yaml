@@ -1,5 +1,5 @@
 name: smartfarm
-description: A new Flutter project.
+description: Smart Farm
 
 version: 1.0.0+1
 
@@ -9,42 +9,61 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+  # cupertino_icons: ^1.0.2
   flutter_svg: ^1.1.6
   lottie: ^2.1.0
   # For Model
-  freezed_annotation: ^2.2.0
+  # freezed_annotation: ^2.2.0
   json_annotation: ^4.7.0
   # For Architecture MVVM
   pmvvm: ^4.0.1
     # border dashed or dotted
-  dotted_border: ^2.0.0+3
-  flutter_dash: ^1.0.0
+  # dotted_border: ^2.0.0+3
+  # flutter_dash: ^1.0.0
   # State Management, Route Management, Dependency Management
   get: ^4.6.5
   get_storage: ^2.0.3
   # Date Format
-  intl: ^0.18.0
+  # intl: ^0.18.0
   # Firebase
   firebase_core: ^2.4.1
   firebase_database: ^10.0.9
   firebase_auth: ^4.2.2
-  firebase_messaging: ^14.2.1
-  firebase_storage: ^11.0.10
+  # firebase_messaging: ^14.2.1
+  # firebase_storage: ^11.0.10
   # For Image Caching
   cached_network_image: ^3.2.3
   # Staggered Grid View
   flutter_staggered_grid_view: ^0.6.2
   # video player
   video_player: ^2.5.1
+  flutter_launcher_icons: ^0.11.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
   # For Model
-  freezed: ^2.2.0
+  # freezed: ^2.2.0
   json_serializable: ^6.5.4
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/smartfarm_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/smartfarm_icon.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/images/smartfarm_icon.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/images/smartfarm_icon.png"
 
 flutter:
   uses-material-design: true
