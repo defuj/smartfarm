@@ -56,6 +56,8 @@ class _View extends StatelessView<PasswordViewModel> {
               ),
               const SizedBox(height: 4),
               InputPassword(
+                onChanged: (value) => viewModel.password = value,
+                textInputAction: TextInputAction.next,
                 hintText: 'Masukan kata sandi lama',
                 padding: const EdgeInsets.only(
                   left: 0,
@@ -84,6 +86,8 @@ class _View extends StatelessView<PasswordViewModel> {
               ),
               const SizedBox(height: 4),
               InputPassword(
+                onChanged: (value) => viewModel.newPassword = value,
+                textInputAction: TextInputAction.next,
                 hintText: 'Masukan kata sandi baru',
                 padding: const EdgeInsets.only(
                   left: 0,
@@ -112,6 +116,8 @@ class _View extends StatelessView<PasswordViewModel> {
               ),
               const SizedBox(height: 4),
               InputPassword(
+                onChanged: (value) => viewModel.confirmPassword = value,
+                textInputAction: TextInputAction.done,
                 hintText: 'Ulangi kata sandi baru',
                 padding: const EdgeInsets.only(
                   left: 0,
@@ -133,7 +139,7 @@ class _View extends StatelessView<PasswordViewModel> {
               const SizedBox(height: 24),
               ButtonPrimary(
                 text: 'Perbaharui Kata Sandi',
-                onPressed: () {},
+                onPressed: () => viewModel.checkPassword(),
               ),
             ],
           ),

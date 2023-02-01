@@ -19,6 +19,7 @@ class LoginViewModel extends ViewModel {
   }
 
   void createAuth() async {
+    loading.show();
     try {
       FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
@@ -60,7 +61,9 @@ class LoginViewModel extends ViewModel {
           context: context,
           dialogType: SweetDialogType.error,
           title: 'Gagal Masuk',
-          content: error.toString(),
+          content: error.toString().contains('user-not-found')
+              ? 'Akun tidak ditemukan'
+              : 'Email atau password salah',
           confirmText: 'Oke',
         ).show();
       });
@@ -87,7 +90,7 @@ class LoginViewModel extends ViewModel {
       return;
     }
 
-    if (validateEmail(email)) {
+    if (!validateEmail(email)) {
       SweetDialog(
         context: context,
         title: 'Email tidak valid',
@@ -106,7 +109,8 @@ class LoginViewModel extends ViewModel {
       ).show();
       return;
     }
-    // Get.offAllNamed('/home');
+
+    createAuth();
   }
 
   @override

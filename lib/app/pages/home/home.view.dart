@@ -115,48 +115,48 @@ class _View extends StatelessView<HomeViewModel> {
                                     ),
                                   ),
                                   const SizedBox(height: 16),
-                                  InkWell(
-                                    onTap: viewModel.changeEmail,
-                                    child: Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 8,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.only(
-                                              right: 12,
-                                            ),
-                                            width: 36,
-                                            height: 30,
-                                            child: const Center(
-                                              child: Icon(
-                                                Icons.alternate_email_rounded,
-                                                color: IColors.green600,
-                                                size: 24,
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              'Perbaharui Email',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText1!
-                                                  .copyWith(
-                                                      color: IColors.gray800,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  //   InkWell(
+                                  //     onTap: viewModel.changeEmail,
+                                  //     child: Container(
+                                  //       width: double.infinity,
+                                  //       padding: const EdgeInsets.symmetric(
+                                  //         horizontal: 16,
+                                  //         vertical: 8,
+                                  //       ),
+                                  //       child: Row(
+                                  //         mainAxisAlignment:
+                                  //             MainAxisAlignment.spaceBetween,
+                                  //         children: [
+                                  //           Container(
+                                  //             margin: const EdgeInsets.only(
+                                  //               right: 12,
+                                  //             ),
+                                  //             width: 36,
+                                  //             height: 30,
+                                  //             child: const Center(
+                                  //               child: Icon(
+                                  //                 Icons.alternate_email_rounded,
+                                  //                 color: IColors.green600,
+                                  //                 size: 24,
+                                  //               ),
+                                  //             ),
+                                  //           ),
+                                  //           Expanded(
+                                  //             child: Text(
+                                  //               'Perbaharui Email',
+                                  //               style: Theme.of(context)
+                                  //                   .textTheme
+                                  //                   .bodyText1!
+                                  //                   .copyWith(
+                                  //                       color: IColors.gray800,
+                                  //                       fontWeight:
+                                  //                           FontWeight.w400),
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ),
                                   InkWell(
                                     onTap: viewModel.changePassword,
                                     child: Container(

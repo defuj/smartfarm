@@ -105,6 +105,8 @@ class _View extends StatelessView<LoginViewModel> {
                           left: 0,
                           right: 16,
                         ),
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
                         onChanged: (value) => viewModel.email = value,
                         hintText: 'Masukkan alamat email',
                         prefixIcon: Container(
