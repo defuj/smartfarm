@@ -4,3 +4,4 @@ export 'home/index.dart';
 export 'password/index.dart';
 export 'email/index.dart';
 export 'video/index.dart';
+export 'config/index.dart';

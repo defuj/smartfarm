@@ -5,6 +5,29 @@ import 'package:smartfarm/repositories.dart';
 class HomeViewModel extends ViewModel {
   late SweetDialog loading;
   final box = GetStorage();
+  final FirebaseDatabase database = FirebaseDatabase.instance;
+  final DatabaseReference ref = FirebaseDatabase.instance.ref();
+
+  bool _fanIsActive = false;
+  bool get fanIsActive => _fanIsActive;
+  set fanIsActive(bool value) {
+    _fanIsActive = value;
+    notifyListeners();
+  }
+
+  String _humidity = '-';
+  String get humidity => _humidity;
+  set humidity(String value) {
+    _humidity = value;
+    notifyListeners();
+  }
+
+  String _temperature = '-';
+  String get temperature => _temperature;
+  set temperature(String value) {
+    _temperature = value;
+    notifyListeners();
+  }
 
   String _selected = 'Aklimatisasi';
   String get selected => _selected;
@@ -44,6 +67,14 @@ class HomeViewModel extends ViewModel {
   void changePassword() {
     try {
       Get.toNamed('/change-password');
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  void changeConfig() {
+    try {
+      Get.toNamed('/config');
     } catch (e) {
       log(e.toString());
     }
@@ -101,6 +132,50 @@ class HomeViewModel extends ViewModel {
     }
   }
 
+  void startMonitoring() async {
+    // blower
+    ref.child('data').child('blower').onValue.listen((DatabaseEvent event) {
+      try {
+        final data = event.snapshot.value;
+        if (data != null) {
+          fanIsActive = data == 0 ? false : true;
+        }
+        log('Result: $data');
+      } catch (e) {
+        log('Error $e');
+        fanIsActive = false;
+      }
+    });
+
+    // humidity
+    ref.child('data').child('kelembaban').onValue.listen((DatabaseEvent event) {
+      try {
+        final data = event.snapshot.value;
+        if (data != null) {
+          humidity = data.toString();
+        }
+        log('Result: $data');
+      } catch (e) {
+        log('Error $e');
+        humidity = '-';
+      }
+    });
+
+    // temperature
+    ref.child('data').child('suhu').onValue.listen((DatabaseEvent event) {
+      try {
+        final data = event.snapshot.value;
+        if (data != null) {
+          temperature = data.toString();
+        }
+        log('Result: $data');
+      } catch (e) {
+        log('Error $e');
+        temperature = '-';
+      }
+    });
+  }
+
   @override
   void init() {
     loading = SweetDialog(
@@ -111,6 +186,7 @@ class HomeViewModel extends ViewModel {
 
     Future.delayed(Duration.zero, () {
       checkAccount();
+      startMonitoring();
     });
   }
 

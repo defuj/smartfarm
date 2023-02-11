@@ -158,6 +158,48 @@ class _View extends StatelessView<HomeViewModel> {
                                   //     ),
                                   //   ),
                                   InkWell(
+                                    onTap: viewModel.changeConfig,
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                              right: 12,
+                                            ),
+                                            width: 36,
+                                            height: 30,
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.thermostat_rounded,
+                                                color: IColors.green600,
+                                                size: 24,
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              'Pengaturan Suhu',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1!
+                                                  .copyWith(
+                                                      color: IColors.gray800,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
                                     onTap: viewModel.changePassword,
                                     child: Container(
                                       width: double.infinity,
@@ -401,7 +443,9 @@ class _View extends StatelessView<HomeViewModel> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    '23°C',
+                                    viewModel.temperature == '-'
+                                        ? '-'
+                                        : '${viewModel.temperature}°C',
                                     style: Theme.of(context)
                                         .textTheme
                                         .caption!
@@ -450,7 +494,9 @@ class _View extends StatelessView<HomeViewModel> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    '20% RH',
+                                    viewModel.humidity == '-'
+                                        ? '-'
+                                        : '${viewModel.humidity}% RH',
                                     style: Theme.of(context)
                                         .textTheme
                                         .caption!
@@ -501,19 +547,25 @@ class _View extends StatelessView<HomeViewModel> {
                                   const SizedBox(height: 4),
                                   Row(
                                     children: [
-                                      const Icon(
+                                      Icon(
                                         Icons.circle,
-                                        color: IColors.green600,
+                                        color: viewModel.fanIsActive
+                                            ? IColors.green600
+                                            : IColors.red50,
                                         size: 12,
                                       ),
                                       const SizedBox(width: 4),
                                       Text(
-                                        'Aktif',
+                                        viewModel.fanIsActive
+                                            ? 'Aktif'
+                                            : 'Mati',
                                         style: Theme.of(context)
                                             .textTheme
                                             .caption!
                                             .copyWith(
-                                                color: IColors.green600,
+                                                color: viewModel.fanIsActive
+                                                    ? IColors.green600
+                                                    : IColors.red50,
                                                 fontWeight: FontWeight.w600),
                                       ),
                                     ],

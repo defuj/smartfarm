@@ -31,4 +31,9 @@ var getRoutes = [
     page: () => const VideoMonitoring(),
     transition: Transition.cupertino,
   ),
+  GetPage(
+    name: '/config',
+    page: () => const Config(),
+    transition: Transition.cupertino,
+  ),
 ];

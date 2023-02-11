@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '286338874029',
     projectId: 'smart-farm-3db28',
     authDomain: 'smart-farm-3db28.firebaseapp.com',
+    databaseURL: 'https://smart-farm-3db28-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'smart-farm-3db28.appspot.com',
     measurementId: 'G-PQTDKMB5Y2',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:286338874029:android:0fed5062ef8bf4e8432424',
     messagingSenderId: '286338874029',
     projectId: 'smart-farm-3db28',
+    databaseURL: 'https://smart-farm-3db28-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'smart-farm-3db28.appspot.com',
   );
 
@@ -66,6 +68,7 @@ class DefaultFirebaseOptions {
     appId: '1:286338874029:ios:35fb1a50b5051b3d432424',
     messagingSenderId: '286338874029',
     projectId: 'smart-farm-3db28',
+    databaseURL: 'https://smart-farm-3db28-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'smart-farm-3db28.appspot.com',
     iosClientId: '286338874029-bq61rilahic84tch89e1f23q9lrcm6vt.apps.googleusercontent.com',
     iosBundleId: 'id.co.sadigit.smartfarm',
@@ -76,6 +79,7 @@ class DefaultFirebaseOptions {
     appId: '1:286338874029:ios:35fb1a50b5051b3d432424',
     messagingSenderId: '286338874029',
     projectId: 'smart-farm-3db28',
+    databaseURL: 'https://smart-farm-3db28-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'smart-farm-3db28.appspot.com',
     iosClientId: '286338874029-bq61rilahic84tch89e1f23q9lrcm6vt.apps.googleusercontent.com',
     iosBundleId: 'id.co.sadigit.smartfarm',

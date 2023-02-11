@@ -25,6 +25,7 @@ Future<void> main() async {
   //     textTheme: textTheme,
   //   );
   await Firebase.initializeApp(
+    name: 'Smart Farm',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 //   await FirebaseMessaging.instance.setAutoInitEnabled(true);
