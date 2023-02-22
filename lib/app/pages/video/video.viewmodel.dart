@@ -4,6 +4,13 @@ import 'dart:developer';
 import 'package:smartfarm/repositories.dart';
 
 class VideoViewModel extends ViewModel {
+  late Future<void> _initializeVideoPlayerFuture;
+  Future<void> get initializeVideoPlayerFuture => _initializeVideoPlayerFuture;
+  set initializeVideoPlayerFuture(Future<void> value) {
+    _initializeVideoPlayerFuture = value;
+    notifyListeners();
+  }
+
   bool hasPlayed = false;
 
   bool _isLive = true;
@@ -36,97 +43,148 @@ class VideoViewModel extends ViewModel {
     notifyListeners();
   }
 
-  VideoPlayerController? _controller;
+  late VideoPlayerController? _controller;
   VideoPlayerController? get controller => _controller;
   set controller(VideoPlayerController? value) {
     _controller = value;
     notifyListeners();
   }
 
-  VideoModel _video = VideoModel();
+  VideoModel _video = VideoModel(
+    videoID: '1',
+    videoUrl:
+        'https://cctvjss.jogjakota.go.id/atcs/ATCS_Simpang_Galeria_TimurSelatan.stream/chunklist_w446327975.m3u8',
+    videoName: 'Video 1',
+    videoFormat: VideoFormat.hls,
+  );
   VideoModel get video => _video;
   set video(VideoModel value) {
     _video = value;
     notifyListeners();
   }
 
-  List<VideoModel> _videos = List<VideoModel>.empty(growable: true);
-  List<VideoModel> get videos => _videos;
-  set videos(List<VideoModel> value) {
-    _videos = value;
-    notifyListeners();
-  }
+  List<VideoModel> videos = [
+    VideoModel(
+      videoID: '1',
+      videoUrl:
+          'https://cctvjss.jogjakota.go.id/atcs/ATCS_Simpang_Galeria_TimurSelatan.stream/chunklist_w446327975.m3u8',
+      videoName: 'Video 1',
+      videoFormat: VideoFormat.hls,
+    ),
+    VideoModel(
+      videoID: '2',
+      videoUrl:
+          'https://sfux-ext.sfux.info/hls/chapter/105/1588724110/1588724110.m3u8',
+      videoName: 'Video 2',
+      videoFormat: VideoFormat.hls,
+    ),
+    VideoModel(
+      videoID: '3',
+      videoUrl:
+          'https://file-examples.com/storage/fec6ed21bf63d96b49d1196/2017/04/file_example_MP4_1280_10MG.mp4',
+      videoName: 'Video 3',
+      videoFormat: VideoFormat.other,
+    )
+  ];
 
   void hideVideoController() {
     isControllerShow = false;
   }
 
   void showVideoController() {
-    isControllerShow = true;
+    try {
+      if (controller!.value.isInitialized) {
+        isControllerShow = true;
 
-    if (timer != null) {
-      timer?.cancel();
+        if (timer != null) {
+          timer?.cancel();
+        }
+        timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+          isControllerShow = false;
+          timer.cancel();
+        });
+      }
+    } catch (e) {
+      log('Error: $e', name: 'VideoViewModel.showVideoController');
     }
-    timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      isControllerShow = false;
-      timer.cancel();
-    });
   }
 
   void showOrHideVideoController() {
-    if (isControllerShow) {
-      hideVideoController();
-    } else {
-      showVideoController();
+    log('showOrHideVideoController: ${controller!.value.isInitialized}');
+    if (controller!.value.isInitialized) {
+      if (isControllerShow) {
+        hideVideoController();
+      } else {
+        showVideoController();
+      }
     }
   }
 
   void playVideo() {
-    if (controller != null) {
-      if (controller!.value.position == controller!.value.duration) {
-        controller?.seekTo(Duration.zero);
-        controller?.play();
-        hasPlayed = true;
-        isPlaying = true;
+    try {
+      // if (controller!.value.position == controller!.value.duration) {
+      //   controller?.seekTo(Duration.zero);
+      //   controller?.play();
+      //   hasPlayed = true;
+      //   isPlaying = true;
 
-        showVideoController();
-      } else {
-        controller?.play();
-        hasPlayed = true;
-        isPlaying = true;
+      //   showVideoController();
+      // } else {
+      //   controller?.play();
+      //   hasPlayed = true;
+      //   isPlaying = true;
 
-        showVideoController();
-      }
+      //   showVideoController();
+      // }
+      controller?.play();
+      hasPlayed = true;
+      isPlaying = true;
+
+      showVideoController();
+    } catch (e) {
+      log('Error: $e', name: 'VideoViewModel.playVideo');
     }
   }
 
   void pauseVideo() {
-    if (controller != null) {
-      if (controller!.value.isPlaying) {
-        controller?.pause();
-        isPlaying = false;
-        showVideoController();
+    try {
+      if (controller!.value.isInitialized) {
+        if (controller!.value.isPlaying) {
+          controller?.pause();
+          isPlaying = false;
+          showVideoController();
+        }
       }
+    } catch (e) {
+      log('Error: $e', name: 'VideoViewModel.pauseVideo');
     }
   }
 
   void playNextVideo() {
-    if (videos.length > 1) {
-      final index =
-          videos.indexWhere((element) => element.videoID == video.videoID);
-      if (index < videos.length - 1) {
-        changeVideo(videos[index + 1]);
+    try {
+      if (videos.length > 1) {
+        final index =
+            videos.indexWhere((element) => element.videoID == video.videoID);
+        if (index < videos.length - 1) {
+          changeVideo(videos[index + 1]);
+        }
       }
+    } catch (e) {
+      log('Error: $e', name: 'VideoViewModel.playNextVideo');
     }
   }
 
   void playPreviousVideo() {
-    if (videos.length > 1) {
-      final index =
-          videos.indexWhere((element) => element.videoID == video.videoID);
-      if (index > 0) {
-        changeVideo(videos[index - 1]);
+    try {
+      if (videos.length > 1) {
+        final index =
+            videos.indexWhere((element) => element.videoID == video.videoID);
+        if (index > 0) {
+          changeVideo(videos[index - 1]);
+        }
       }
+    } catch (e) {
+      log('Error: $e', name: 'VideoViewModel.playPreviousVideo');
     }
   }
 
@@ -134,27 +192,41 @@ class VideoViewModel extends ViewModel {
     this.video = video;
     hideVideoController();
     try {
-      controller = VideoPlayerController.network(video.videoUrl!);
+      controller = VideoPlayerController.network(
+        video.videoUrl!,
+        formatHint: video.videoFormat,
+      );
       controller?.addListener(() {
         log('isPlaying: ${controller!.value.isPlaying}');
+        log('position: ${controller!.value.position}');
+        log('isInitialized: ${controller!.value.isInitialized}');
 
         if (controller!.value.isPlaying) {
           if (controller!.value.position == controller!.value.duration) {
-            isPlaying = false;
-            showVideoController();
+            // isPlaying = false;
+            // showVideoController();
           }
         } else {
-          isPlaying = false;
-          showVideoController();
+          //   isPlaying = false;
+          //   showVideoController();
         }
       });
-      controller?.setLooping(false);
+      //   controller?.setLooping(false);
       controller?.setVolume(1.0);
-      controller?.initialize().then((_) {
+      //   controller?.initialize().then((_) {
+      //     videoAspectRatio = controller!.value.aspectRatio;
+      //     playVideo();
+      //     notifyListeners();
+      //   });
+      initializeVideoPlayerFuture = controller!.initialize().then((_) {
         videoAspectRatio = controller!.value.aspectRatio;
         playVideo();
         notifyListeners();
+        log('controller initialized');
       });
+      //   initializeVideoPlayerFuture = controller!.initialize();
+      //   videoAspectRatio = controller!.value.aspectRatio;
+      //   playVideo();
     } catch (e) {
       log(e.toString());
     }
@@ -162,31 +234,10 @@ class VideoViewModel extends ViewModel {
 
   @override
   void init() {
-    videos.add(VideoModel(
-      videoID: '1',
-      videoUrl:
-          'https://file-examples.com/storage/fec6ed21bf63d96b49d1196/2017/04/file_example_MP4_1280_10MG.mp4',
-      videoName: 'Video 1',
-    ));
-    videos.add(VideoModel(
-      videoID: '2',
-      videoUrl:
-          'https://file-examples.com/storage/fec6ed21bf63d96b49d1196/2017/04/file_example_MP4_1280_10MG.mp4',
-      videoName: 'Video 2',
-    ));
-    videos.add(VideoModel(
-      videoID: '3',
-      videoUrl:
-          'https://file-examples.com/storage/fec6ed21bf63d96b49d1196/2017/04/file_example_MP4_1280_10MG.mp4',
-      videoName: 'Video 3',
-    ));
-    videos = videos;
-    changeVideo(VideoModel(
-      videoID: '1',
-      videoUrl:
-          'https://file-examples.com/storage/fec6ed21bf63d96b49d1196/2017/04/file_example_MP4_1280_10MG.mp4',
-      videoName: 'Video 1',
-    ));
+    changeVideo(videos[0]);
+
+    // https://sfux-ext.sfux.info/hls/chapter/105/1588724110/1588724110.m3u8
+    // https://file-examples.com/storage/fec6ed21bf63d96b49d1196/2017/04/file_example_MP4_1280_10MG.mp4
   }
 
   @override
@@ -243,7 +294,7 @@ class VideoViewModel extends ViewModel {
   void onInactive() {
     try {
       if (hasPlayed) {
-        controller?.pause();
+        controller?.dispose();
       }
     } catch (e) {
       log(e.toString());

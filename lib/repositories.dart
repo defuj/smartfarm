@@ -19,3 +19,4 @@ export 'package:cached_network_image/cached_network_image.dart';
 export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 export 'package:video_player/video_player.dart';
 export 'package:firebase_auth/firebase_auth.dart';
+export 'package:lecle_yoyo_player/lecle_yoyo_player.dart';

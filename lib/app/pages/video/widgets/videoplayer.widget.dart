@@ -3,13 +3,58 @@ import 'package:smartfarm/repositories.dart';
 Widget videoPlayer(BuildContext context, VideoViewModel viewModel) {
   return AspectRatio(
     aspectRatio: viewModel.videoAspectRatio,
+    // child: YoYoPlayer(
+    //   aspectRatio: viewModel.videoAspectRatio,
+    //   url: viewModel.video.videoUrl!,
+    //   videoStyle: VideoStyle(
+    //     showLiveDirectButton: true,
+    //     playIcon: SvgPicture.asset(
+    //       'assets/icons/svg/video_play.svg',
+    //       color: IColors.whitetransparant,
+    //       width: 40,
+    //     ),
+    //     pauseIcon: SvgPicture.asset(
+    //       'assets/icons/svg/video_pause.svg',
+    //       color: IColors.whitetransparant,
+    //       width: 40,
+    //     ),
+    //     forwardIcon: SvgPicture.asset(
+    //       'assets/icons/svg/video_next.svg',
+    //       color: IColors.whitetransparant,
+    //       width: 40,
+    //     ),
+    //     backwardIcon: SvgPicture.asset(
+    //       'assets/icons/svg/video_back.svg',
+    //       color: IColors.whitetransparant,
+    //       width: 40,
+    //     ),
+    //   ),
+    //   videoLoadingStyle: const VideoLoadingStyle(
+    //     loadingIndicatorColor: IColors.green600,
+    //     loadingBackgroundColor: Colors.black,
+    //     loadingIndicatorBgColor: IColors.green600,
+    //     loadingIndicatorValueColor: Colors.black,
+    //     showLoadingText: false,
+    //   ),
+    //   allowCacheFile: true,
+    // ),
     child: Stack(
       children: [
-        viewModel.controller != null
-            ? viewModel.controller!.value.isInitialized
-                ? VideoPlayer(viewModel.controller!)
-                : videoLoading()
-            : videoLoading(),
+        FutureBuilder(
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return VideoPlayer(viewModel.controller!);
+            } else {
+              return videoLoading();
+            }
+          },
+          future: viewModel.initializeVideoPlayerFuture,
+        ),
+        // viewModel.controller != null
+        //     ? viewModel.controller!.value.isInitialized
+        //         ? VideoPlayer(viewModel.controller!)
+        //         : videoLoading()
+        //     : videoLoading(),
         AnimatedOpacity(
           opacity: viewModel.isControllerShow ? 1.0 : 0.0,
           duration: const Duration(milliseconds: 500),
