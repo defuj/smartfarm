@@ -1,13 +1,32 @@
 import 'package:smartfarm/repositories.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MVVM<HomeViewModel>(
       view: () => const _View(),
-      viewModel: HomeViewModel(),
+      viewModel: HomeViewModel(animationController: _controller),
     );
   }
 }
@@ -115,48 +134,6 @@ class _View extends StatelessView<HomeViewModel> {
                                     ),
                                   ),
                                   const SizedBox(height: 16),
-                                  //   InkWell(
-                                  //     onTap: viewModel.changeEmail,
-                                  //     child: Container(
-                                  //       width: double.infinity,
-                                  //       padding: const EdgeInsets.symmetric(
-                                  //         horizontal: 16,
-                                  //         vertical: 8,
-                                  //       ),
-                                  //       child: Row(
-                                  //         mainAxisAlignment:
-                                  //             MainAxisAlignment.spaceBetween,
-                                  //         children: [
-                                  //           Container(
-                                  //             margin: const EdgeInsets.only(
-                                  //               right: 12,
-                                  //             ),
-                                  //             width: 36,
-                                  //             height: 30,
-                                  //             child: const Center(
-                                  //               child: Icon(
-                                  //                 Icons.alternate_email_rounded,
-                                  //                 color: IColors.green600,
-                                  //                 size: 24,
-                                  //               ),
-                                  //             ),
-                                  //           ),
-                                  //           Expanded(
-                                  //             child: Text(
-                                  //               'Perbaharui Email',
-                                  //               style: Theme.of(context)
-                                  //                   .textTheme
-                                  //                   .bodyText1!
-                                  //                   .copyWith(
-                                  //                       color: IColors.gray800,
-                                  //                       fontWeight:
-                                  //                           FontWeight.w400),
-                                  //             ),
-                                  //           ),
-                                  //         ],
-                                  //       ),
-                                  //     ),
-                                  //   ),
                                   InkWell(
                                     onTap: viewModel.changeConfig,
                                     child: Container(
@@ -357,7 +334,7 @@ class _View extends StatelessView<HomeViewModel> {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                viewModel.selected = viewModel.list[index];
+                                viewModel.switchLocation(viewModel.list[index]);
                               },
                               splashColor: Colors.transparent,
                               child: Container(
@@ -402,250 +379,350 @@ class _View extends StatelessView<HomeViewModel> {
                           },
                         ),
                       ),
-                      const SizedBox(height: 18),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 8,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Icon(
-                                    Icons.thermostat_rounded,
-                                    color: IColors.green800,
-                                    size: 24,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    'Suhu',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption!
-                                        .copyWith(color: IColors.gray800),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    viewModel.temperature == '-'
-                                        ? '-'
-                                        : '${viewModel.temperature}°C',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption!
-                                        .copyWith(
-                                            color: IColors.green800,
-                                            fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 8,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Icon(
-                                    Icons.water_drop_rounded,
-                                    color: IColors.green800,
-                                    size: 24,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    'Kelembaban',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption!
-                                        .copyWith(color: IColors.gray800),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    viewModel.humidity == '-'
-                                        ? '-'
-                                        : '${viewModel.humidity}% RH',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption!
-                                        .copyWith(
-                                            color: IColors.green800,
-                                            fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 8,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/svg/fan_icon.svg',
-                                    color: IColors.green800,
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    'Blower',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption!
-                                        .copyWith(color: IColors.gray800),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.circle,
-                                        color: viewModel.fanIsActive
-                                            ? IColors.green600
-                                            : IColors.red50,
-                                        size: 12,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        viewModel.fanIsActive
-                                            ? 'Aktif'
-                                            : 'Mati',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .caption!
-                                            .copyWith(
-                                                color: viewModel.fanIsActive
-                                                    ? IColors.green600
-                                                    : IColors.red50,
-                                                fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                        ],
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width - 32,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 18,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Visibility(
+                        visible: !viewModel.isSwitching,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
+                            const SizedBox(height: 16),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Text(
+                                viewModel.lastUpdated,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(color: IColors.gray800),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Container(
                                     padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
+                                      horizontal: 8,
+                                      vertical: 8,
                                     ),
-                                    child: SvgPicture.asset(
-                                      'assets/icons/svg/camera_icon.svg',
-                                      color: IColors.green800,
-                                      width: 32,
-                                      height: 53,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          blurRadius: 8,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const Icon(
+                                          Icons.thermostat_rounded,
+                                          color: IColors.green800,
+                                          size: 24,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          'Suhu',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption!
+                                              .copyWith(color: IColors.gray800),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          viewModel.temperature == '-'
+                                              ? '-'
+                                              : '${viewModel.temperature}°C',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption!
+                                              .copyWith(
+                                                  color: IColors.green800,
+                                                  fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Text(
-                                    'Kamera',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2!
-                                        .copyWith(
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          blurRadius: 8,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const Icon(
+                                          Icons.water_drop_rounded,
+                                          color: IColors.green800,
+                                          size: 24,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          'Kelembaban',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption!
+                                              .copyWith(color: IColors.gray800),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          viewModel.humidity == '-'
+                                              ? '-'
+                                              : '${viewModel.humidity}% RH',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption!
+                                              .copyWith(
+                                                  color: IColors.green800,
+                                                  fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          blurRadius: 8,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(horizontal: 8),
+                                                  child: RotationTransition(
+                                                    turns: Tween(
+                                                            begin: 0.0,
+                                                            end: 1.0)
+                                                        .animate(viewModel
+                                                            .animationController),
+                                                    child: SvgPicture.asset(
+                                                      'assets/icons/svg/fan_icon.svg',
+                                                      color:
+                                                          viewModel.fanIsActive
+                                                              ? IColors.green600
+                                                              : IColors.gray800,
+                                                      width: 24,
+                                                      height: 24,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Switch(
+                                              value: viewModel.fanIsActive,
+                                              activeColor: IColors.green600,
+                                              onChanged: (value) {
+                                                viewModel.updateBlower(value);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        //   Padding(
+                                        //     padding: const EdgeInsets.symmetric(
+                                        //         horizontal: 8),
+                                        //     child: SvgPicture.asset(
+                                        //       'assets/icons/svg/fan_icon.svg',
+                                        //       color: IColors.green800,
+                                        //       width: 24,
+                                        //       height: 24,
+                                        //     ),
+                                        //   ),
+                                        //   const SizedBox(height: 10),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(
+                                            'Blower',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .caption!
+                                                .copyWith(
+                                                    color: IColors.gray800),
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            //   Icon(
+                                            //     Icons.circle,
+                                            //     color: viewModel.fanIsActive
+                                            //         ? IColors.green600
+                                            //         : IColors.red50,
+                                            //     size: 12,
+                                            //   ),
+                                            //   Switch(
+                                            //     value: viewModel.fanIsActive,
+                                            //     activeColor: IColors.green600,
+                                            //     onChanged: (value) {
+                                            //       viewModel.fanIsActive = value;
+                                            //     },
+                                            //   ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8),
+                                              child: Text(
+                                                viewModel.fanIsActive
+                                                    ? 'Aktif'
+                                                    : 'Mati',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .caption!
+                                                    .copyWith(
+                                                        color: viewModel
+                                                                .fanIsActive
+                                                            ? IColors.green600
+                                                            : IColors.black80,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                              ],
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width - 32,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 18,
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                          ),
+                                          child: SvgPicture.asset(
+                                            'assets/icons/svg/camera_icon.svg',
                                             color: IColors.green800,
-                                            fontWeight: FontWeight.w600),
+                                            width: 32,
+                                            height: 53,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Kamera',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2!
+                                              .copyWith(
+                                                  color: IColors.green800,
+                                                  fontWeight: FontWeight.w600),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          '3 Kamera Tersambung',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2!
+                                              .copyWith(color: IColors.gray600),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    '3 Kamera Tersambung',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2!
-                                        .copyWith(color: IColors.gray600),
+                                  SizedBox(
+                                    width: 120,
+                                    child: ButtonPrimary(
+                                      text: 'Lihat Video',
+                                      onPressed: viewModel.openVideoMonitoring,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              width: 120,
-                              child: ButtonPrimary(
-                                text: 'Lihat Video',
-                                onPressed: viewModel.openVideoMonitoring,
-                              ),
-                            ),
                           ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: viewModel.isSwitching,
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height / 4.5),
+                            child: const CircularProgressIndicator(
+                              color: IColors.green500,
+                            ),
+                          ),
                         ),
                       ),
                     ],

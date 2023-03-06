@@ -32,7 +32,7 @@ Future<void> main() async {
   await GetStorage.init();
   runApp(
     GetMaterialApp(
-      title: 'Dunia Buah',
+      title: 'Smart Farm',
       theme: lightTheme,
       //   darkTheme: darkTheme,
       initialRoute: '/splash',
